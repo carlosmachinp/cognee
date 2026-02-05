@@ -79,11 +79,12 @@ services:
     build:
       context: ./cognee-frontend
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_BACKEND_API_URL: https://api.cognee.lamaquina.club
     environment:
-      NEXT_PUBLIC_BACKEND_API_URL: 'https://api.cognee.lamaquina.club'
+      NEXT_PUBLIC_BACKEND_API_URL: https://api.cognee.lamaquina.club
     networks:
       - cognee-network
-    image: ''
 networks:
   cognee-network:
     name: cognee-network
