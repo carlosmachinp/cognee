@@ -10,7 +10,7 @@ RUN npm ci && npm rebuild lightningcss
 COPY . .
 
 ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1  # Desactiva telemetry
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
 
