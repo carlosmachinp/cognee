@@ -39,7 +39,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 COPY ./cognee /app/cognee
 COPY ./distributed /app/distributed
 RUN --mount=type=cache,target=/root/.cache/uv \
-uv sync --extra debug --extra api --extra postgres --frozen --no-dev --no-editable
+uv sync --extra debug --extra api --extra postgres --frozen --no-install-project --no-dev --no-editable
 
 FROM python:3.12-slim-bookworm
 
