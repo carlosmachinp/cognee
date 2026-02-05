@@ -1,18 +1,22 @@
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-ENV NODE_ENV=production
-RUN npm run build
+FROM python:3.12-slim
 
-FROM node:20-alpine AS runner
 WORKDIR /app
-ENV NODE_ENV=production
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/next.config.js ./
-RUN npm ci --production
-EXPOSE 3000
-CMD ["npm", "run", "start"]
+
+# Instala dependencias del sistema (si necesita git o otros para requirements)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copia requirements y instala Python deps
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia el código
+COPY . .
+
+# Expone puerto
+EXPOSE 8000
+
+# Comando para correr el API
+CMD ["uvicorn", "cognee.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
