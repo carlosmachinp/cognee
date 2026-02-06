@@ -32,7 +32,7 @@ services:
       timeout: 10s
       retries: 5
     environment:
-      ENV: production
+      ENV: dev
       DEBUG: false
       HOST: 0.0.0.0
       LOG_LEVEL: INFO
